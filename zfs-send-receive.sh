@@ -107,7 +107,8 @@ list_snapshots()
 # destroy snapshots having $SHAPSHOT_NAME_PREFIX in name for given dataset, specified as $1 except last n, where n specified as $2 
 destroy_snapshots()
 {
-	zfs list -H -r -o name -t snapshot $1 | grep @$SHAPSHOT_NAME_PREFIX | tail -r | tail -n +$(expr $2 + 1) | tail -r | xargs -n 1 zfs destroy $VERBOSE $DRY_RUN
+	#zfs list -H -r -o name -t snapshot $1 | grep @$SHAPSHOT_NAME_PREFIX | tail -r | tail -n +$(expr $2 + 1) | tail -r | xargs -n 1 zfs destroy $VERBOSE $DRY_RUN
+	zfs list -H -r -o name -t snapshot $1 | grep @$SHAPSHOT_NAME_PREFIX | sort -r | tail -n +$(expr $2 + 1) | sort -r | xargs -n 1 zfs destroy $VERBOSE $DRY_RUN
 }
 
 # execute passed parameters as command remotely via ssh with $SSH_OPTIONS on $REMOTE box
